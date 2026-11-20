@@ -18,8 +18,8 @@ dotenv.config();
 const { GoogleGenAI } = require('@google/genai');
 
 const app = express();
-// Port configuration: Hugging Face Spaces defaults to 7860; can be overridden via PORT
-const PORT = process.env.PORT || 7860;
+// Port configuration: Defaults to 3000 locally, and 7860 on Hugging Face Spaces (via ENV PORT=7860 in Dockerfile)
+const PORT = process.env.PORT || 3000;
 
 // Supported Flash models list with automatic fallback.
 // gemini-3.5-flash is currently high-speed, reliable, and active.
