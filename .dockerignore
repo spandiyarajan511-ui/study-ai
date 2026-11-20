@@ -1,0 +1,13 @@
+# Ignore node_modules
+node_modules/
+
+# Ignore local environment variables with private keys
+.env
+
+# Ignore git data
+.git
+.gitignore
+
+# Logs
+*.log
+npm-debug.log*

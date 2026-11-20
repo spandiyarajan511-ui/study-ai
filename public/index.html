@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyMate AI – Your Personal AI Study Buddy</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts: Inter for clean typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="logo-icon">
+          <!-- Graduation Cap + Sparkles SVG -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">StudyMate <span class="brand-ai">AI</span></h1>
+          <p class="brand-subtitle">Transform your notes into smart summaries and quizzes.</p>
+        </div>
+      </div>
+      <div class="header-status">
+        <div id="api-status-badge" class="status-badge checking">
+          <span class="status-dot"></span>
+          <span id="api-status-text">Checking API...</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+
+    <!-- Generative AI Educational Section -->
+    <section class="card educational-card">
+      <div class="section-header-row">
+        <div class="section-title-wrap">
+          <span class="step-badge">AI Architecture</span>
+          <h2 class="card-title">How Generative AI Works in StudyMate AI</h2>
+        </div>
+        <button id="toggle-genai-info" class="btn-text" aria-label="Toggle AI architecture details">Hide Guide</button>
+      </div>
+      
+      <p class="educational-intro">
+        Generative Artificial Intelligence leverages Large Language Models (LLMs) to synthesize new, customized learning materials from raw study notes. Here is the exact end-to-end process:
+      </p>
+
+      <!-- 6-Step Visual Flow Diagram -->
+      <div id="genai-steps-container" class="genai-pipeline-grid">
+        <div class="pipeline-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Student Input</h4>
+            <p>Student pastes notes or uploads an academic PDF document.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>PDF Extraction</h4>
+            <p>Server extracts readable plain text from uploaded PDF binary data.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>Prompt Engineering</h4>
+            <p>Backend constructs a structured prompt enforcing strict educational constraints.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h4>Gemini LLM Processing</h4>
+            <p>Google Gemini analyzes semantic relationships in the student's text.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <h4>Content Generation</h4>
+            <p>Gemini generates 5–6 summary points, 5 MCQs, and 3 key terms as structured JSON.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-number">6</div>
+          <div class="step-content">
+            <h4>Interactive Dashboard</h4>
+            <p>Frontend renders interactive quizzes, scoring, and copyable study summaries.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Study Material Input Section -->
+    <section class="card input-card">
+      <div class="section-header-row">
+        <div>
+          <h2 class="card-title">Study Material Input</h2>
+          <p class="card-description">Paste your raw notes or upload a chapter PDF. StudyMate AI will analyze both!</p>
+        </div>
+        <button id="btn-sample-notes" class="btn-secondary btn-sm" title="Insert Fundamentals of Computing notes">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Load Sample Notes
+        </button>
+      </div>
+
+      <!-- Subject Input -->
+      <div class="form-group">
+        <label for="subject-input" class="form-label">
+          Subject or Topic Name <span class="label-hint">(optional, helps AI focus)</span>
+        </label>
+        <input 
+          type="text" 
+          id="subject-input" 
+          class="form-control" 
+          placeholder="e.g., Fundamentals of Computing, Operating Systems, Computer Networks..."
+        >
+      </div>
+
+      <!-- Dual Input Tabs / Columns -->
+      <div class="input-methods-grid">
+        
+        <!-- Option A: Paste Notes -->
+        <div class="input-column">
+          <div class="input-col-header">
+            <span class="badge-option">OPTION A</span>
+            <label for="notes-textarea" class="col-title">Paste Study Notes</label>
+          </div>
+          <textarea 
+            id="notes-textarea" 
+            class="form-control notes-textarea" 
+            rows="9" 
+            placeholder="Paste your study notes or chapter content here..."
+          ></textarea>
+          <div class="textarea-stats">
+            <span id="char-count">0 characters</span>
+            <span id="word-count">0 words</span>
+          </div>
+        </div>
+
+        <!-- Option B: Upload PDF -->
+        <div class="input-column">
+          <div class="input-col-header">
+            <span class="badge-option">OPTION B</span>
+            <span class="col-title">Upload Study PDF</span>
+          </div>
+
+          <div id="drop-zone" class="drop-zone">
+            <input type="file" id="pdf-file-input" class="file-input" accept=".pdf,application/pdf">
+            
+            <div id="drop-zone-idle" class="drop-zone-content">
+              <div class="upload-icon-circle">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+              </div>
+              <p class="drop-title"><strong>Click to browse</strong> or drag & drop PDF here</p>
+              <p class="drop-hint">Accepts textbook chapters, lecture slides (Max 10 MB)</p>
+            </div>
+
+            <!-- Uploaded File Card (Hidden initially) -->
+            <div id="uploaded-file-card" class="uploaded-file-card hidden">
+              <div class="file-info-group">
+                <div class="pdf-file-badge">PDF</div>
+                <div class="file-metadata">
+                  <div id="file-name-text" class="file-name">document.pdf</div>
+                  <div id="file-size-text" class="file-size">1.2 MB</div>
+                </div>
+              </div>
+              <button type="button" id="btn-remove-file" class="btn-icon" title="Remove PDF file">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="dual-input-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>You can use pasted notes, an uploaded PDF, or both! If both are provided, StudyMate AI combines them safely.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="input-actions-bar">
+        <button id="btn-generate" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/>
+          </svg>
+          Generate Study Pack
+        </button>
+
+        <button id="btn-clear-all" class="btn-outline">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          Clear All
+        </button>
+      </div>
+
+    </section>
+
+    <!-- Loading Animation Card (Hidden initially) -->
+    <div id="loading-card" class="card loading-card hidden">
+      <div class="spinner-container">
+        <div class="spinner-ring"></div>
+        <div class="spinner-sparkle">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#0284c7">
+            <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/>
+          </svg>
+        </div>
+      </div>
+      <h3 id="loading-title" class="loading-title">Generating your Study Pack...</h3>
+      <p id="loading-status-text" class="loading-subtitle">Google Gemini is processing your notes into summaries, questions, and key terms...</p>
+      <div class="loading-bar">
+        <div class="loading-bar-fill"></div>
+      </div>
+    </div>
+
+    <!-- Error Alert Box (Hidden initially) -->
+    <div id="error-card" class="card error-card hidden">
+      <div class="error-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <div class="error-text">
+        <h4 id="error-title">Generation Error</h4>
+        <p id="error-message">Something went wrong. Please check your input and try again.</p>
+      </div>
+      <button id="btn-dismiss-error" class="btn-icon" aria-label="Dismiss error">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Output Dashboard (Hidden until generation completes) -->
+    <div id="results-dashboard" class="results-dashboard hidden">
+      
+      <!-- Results Overview Header -->
+      <div class="card results-header-card">
+        <div class="results-meta">
+          <span class="meta-badge" id="result-subject-badge">Subject: General Notes</span>
+          <span class="meta-tag" id="result-word-count">0 words analyzed</span>
+          <span class="meta-tag" id="result-source-tag">Source: Pasted Notes</span>
+        </div>
+        <div class="results-top-actions">
+          <button id="btn-copy-all" class="btn-secondary btn-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Copy All Results
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 1: AI SUMMARY -->
+      <section class="card section-card" id="summary-section">
+        <div class="section-card-header">
+          <div class="section-title-wrap">
+            <div class="section-icon-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="21" y1="10" x2="3" y2="10"></line>
+                <line x1="21" y1="6" x2="3" y2="6"></line>
+                <line x1="21" y1="14" x2="3" y2="14"></line>
+                <line x1="21" y1="18" x2="7" y2="18"></line>
+              </svg>
+            </div>
+            <div>
+              <h3 class="section-heading">SECTION 1: AI Summary</h3>
+              <p class="section-subheading">Key concepts distilled into 5–6 beginner-friendly bullet points</p>
+            </div>
+          </div>
+          <button id="btn-copy-summary" class="btn-secondary btn-sm">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Copy Summary
+          </button>
+        </div>
+
+        <ul id="summary-list" class="summary-bullets-list">
+          <!-- Dynamically inserted bullet points -->
+        </ul>
+      </section>
+
+      <!-- SECTION 2: PRACTICE QUIZ -->
+      <section class="card section-card" id="quiz-section">
+        <div class="section-card-header">
+          <div class="section-title-wrap">
+            <div class="section-icon-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div>
+              <h3 class="section-heading">SECTION 2: Practice Quiz (5 MCQs)</h3>
+              <p class="section-subheading">Test your understanding with dynamically generated multiple-choice questions</p>
+            </div>
+          </div>
+          <button id="btn-regenerate-quiz" class="btn-secondary btn-sm" title="Generate 5 new questions from the same material">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            Regenerate Quiz
+          </button>
+        </div>
+
+        <!-- Score Banner (Appears after quiz submission) -->
+        <div id="quiz-score-banner" class="quiz-score-banner hidden">
+          <div class="score-left">
+            <div class="score-icon">🏆</div>
+            <div>
+              <div id="score-display-text" class="score-number">SCORE: 0 / 5</div>
+              <div id="score-message-text" class="score-subtext">Submit the quiz to calculate your result!</div>
+            </div>
+          </div>
+          <button id="btn-retake-quiz-top" class="btn-primary btn-sm">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 2v6h6"></path>
+              <path d="M3 13a9 9 0 1 0 3-7.7L3 8"></path>
+            </svg>
+            Retake Quiz
+          </button>
+        </div>
+
+        <!-- Interactive Questions Container -->
+        <div id="quiz-container" class="quiz-questions-list">
+          <!-- Dynamically inserted 5 questions -->
+        </div>
+
+        <!-- Quiz Action Controls -->
+        <div class="quiz-actions-footer">
+          <button id="btn-submit-quiz" class="btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Submit Quiz
+          </button>
+
+          <button id="btn-retake-quiz" class="btn-secondary hidden">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 2v6h6"></path>
+              <path d="M3 13a9 9 0 1 0 3-7.7L3 8"></path>
+            </svg>
+            Retake Quiz
+          </button>
+        </div>
+      </section>
+
+      <!-- SECTION 3: KEY TERMS -->
+      <section class="card section-card" id="key-terms-section">
+        <div class="section-card-header">
+          <div class="section-title-wrap">
+            <div class="section-icon-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="section-heading">SECTION 3: Key Terms</h3>
+              <p class="section-subheading">Three foundational concepts with simple definitions and real-world examples</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="key-terms-container" class="key-terms-grid">
+          <!-- Dynamically inserted 3 key terms -->
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>StudyMate AI – Problem Statement 10: AI Study Buddy</p>
+      <p class="footer-subtext">Powered by Google Gemini 3.8 Flash &bull; Built with HTML5, CSS3, JavaScript, Node.js & Express</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

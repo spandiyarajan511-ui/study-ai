@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Environment variables (API keys)
+.env
+
+# Uploads / temp files
+uploads/
+*.tmp
+
+# Operating system / IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
