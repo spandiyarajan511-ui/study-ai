@@ -14,3 +14,7 @@ deploy_to_hf.py
 Thumbs.db
 .vscode/
 .idea/
+
+# Local subfolders / clones
+Study-buddy/
+
