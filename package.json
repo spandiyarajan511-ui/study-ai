@@ -1,7 +1,7 @@
 {
   "name": "studymate-ai",
   "version": "1.0.0",
-  "description": "StudyMate AI - Transform notes into smart summaries and quizzes with Google Gemini",
+  "description": "StudyMate AI - Transform notes into smart summaries and quizzes with Google Gemini (by Pandi)",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -14,7 +14,7 @@
     "quiz-generator",
     "education"
   ],
-  "author": "College Generative AI Student",
+  "author": "Pandi",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {

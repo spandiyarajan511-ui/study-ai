@@ -11,6 +11,7 @@ license: mit
 
 # StudyMate AI – Your Personal AI Study Buddy
 > **Problem Statement 10: AI Study Buddy (College Generative AI Assignment)**  
+> **Author: Pandi**  
 > Built with HTML5, CSS3, JavaScript, Node.js, Express.js, and Google Gemini API using the official `@google/genai` SDK.
 
 ---
@@ -149,7 +150,27 @@ http://localhost:7860
 
 ---
 
-## 7. How to Deploy to Hugging Face Spaces (Live Link)
+## 7. How to Deploy to Vercel (Recommended)
+
+StudyMate AI comes fully configured for instant deployment to [Vercel](https://vercel.com) using `vercel.json` and the `api/` serverless bridge.
+
+### Steps to Deploy to Vercel:
+
+1. **Push to GitHub**:
+   - Push your project repository to GitHub (or import the folder directly).
+2. **Import into Vercel**:
+   - Go to [vercel.com](https://vercel.com) and click **"Add New Project"**.
+   - Select your GitHub repository.
+3. **Configure Environment Variables**:
+   - Under **Environment Variables**, add:
+     - `GEMINI_API_KEY`: Your Google Gemini API Key
+     - `GEMINI_MODEL`: `gemini-3.5-flash`
+4. **Deploy**:
+   - Click **"Deploy"**. Vercel will build the frontend assets and serverless API functions automatically!
+
+---
+
+## 8. How to Deploy to Hugging Face Spaces (Live Link)
 
 You can host StudyMate AI completely free on Hugging Face Spaces using the included **Dockerfile**:
 

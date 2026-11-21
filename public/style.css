@@ -125,6 +125,24 @@ body {
   color: var(--text-main);
   letter-spacing: -0.02em;
   line-height: 1.2;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.developer-tag {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(2, 132, 199, 0.1);
+  color: #0284c7;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .brand-ai {

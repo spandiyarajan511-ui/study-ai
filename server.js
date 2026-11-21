@@ -1,7 +1,8 @@
 // ==============================================================================
 // StudyMate AI - Express Backend Server
 // ==============================================================================
-// Problem Statement 10: AI Study Buddy (College Generative AI Assignment)
+// Problem Statement 10: AI Study Buddy
+// Author: Pandi
 // Tech Stack: Node.js, Express.js, @google/genai, dotenv, pdf-parse, multer
 // ==============================================================================
 
@@ -538,11 +539,17 @@ app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start listening
-app.listen(PORT, () => {
-  console.log(`====================================================`);
-  console.log(` StudyMate AI Server running at: http://localhost:${PORT}`);
-  console.log(` Gemini Model configured: ${GEMINI_MODEL}`);
-  console.log(` API Key status: ${getGeminiApiKey() ? 'CONFIGURED (Ready)' : 'NOT CONFIGURED (Add to .env)'}`);
-  console.log(`====================================================`);
-});
+// Export app for serverless platforms like Vercel
+module.exports = app;
+
+// Start listening if running directly (local development or Docker)
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`====================================================`);
+    console.log(` StudyMate AI Server running at: http://localhost:${PORT}`);
+    console.log(` Developed by: Pandi`);
+    console.log(` Gemini Model configured: ${GEMINI_MODEL}`);
+    console.log(` API Key status: ${getGeminiApiKey() ? 'CONFIGURED (Ready)' : 'NOT CONFIGURED (Add to .env)'}`);
+    console.log(`====================================================`);
+  });
+}
